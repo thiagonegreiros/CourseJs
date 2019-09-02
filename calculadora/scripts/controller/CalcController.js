@@ -76,8 +76,24 @@ class CalcController{
         
     }
 
+    pushOperator(value)
+    {
+        this._operation.push(value);
+
+        if(this._operation.length > 3)
+        {
+            this.calc();
+        }
+    }
+
+    calc()
+    {
+        let last = this._operation.pop();
+    }
+
     addOperation(value)
     {
+        console.log("A", value, isNaN(this.getLastOperation()))
         if(isNaN(this.getLastOperation()))
         {
             //String
@@ -91,18 +107,27 @@ class CalcController{
             }
             else
             {
-                this._operation.push(value);
+                this.pushOperator(value);
             }
         }
         else
         {
-            //Number
-            let newValue = this.getLastOperation().toString() + value.toString();
-            this.setLastOperator(parseInt(newValue));
+            if(this.isOperator(value))
+            {
+                this.pushOperator(value);
+            }
+            else
+            {
+                //Number
+                let newValue = this.getLastOperation().toString() + value.toString();
+                this.setLastOperator(parseInt(newValue));
+                //this.pushOperator(value);
+            }
+
         }
 
 
-        this._operation.push(value);
+       
 
         console.log(this._operation);
     }
