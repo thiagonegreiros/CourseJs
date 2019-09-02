@@ -86,9 +86,18 @@ class CalcController{
         }
     }
 
+    setNumberToDisplay()
+    {
+        
+    }
+
     calc()
     {
         let last = this._operation.pop();
+
+        let result = eval(this._operation.join(""));
+
+        this._operation = [result, last];
     }
 
     addOperation(value)
@@ -122,6 +131,9 @@ class CalcController{
                 let newValue = this.getLastOperation().toString() + value.toString();
                 this.setLastOperator(parseInt(newValue));
                 //this.pushOperator(value);
+
+
+                this.setNumberToDisplay();
             }
 
         }
