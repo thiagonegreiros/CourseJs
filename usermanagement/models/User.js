@@ -3,6 +3,8 @@ class User {
     // Metodo construtor
     constructor(name, gender, birth, country, email, password, photo, admin) {
         //Atributo - variavel
+        this._id;
+        this._admin;
         this._name = name;
         this._gender = gender;
         this._birth = birth;
@@ -16,6 +18,10 @@ class User {
         this._register = new Date();
     }
 
+    get id() {
+        return this._id;
+    }
+    
     get register() {
         return this._register;
     }
@@ -67,5 +73,74 @@ class User {
 
            
         }
+    }
+
+    static getUserStorage()
+    {
+        let users = [];
+
+        // SESSION STORAGE
+        // if(sessionStorage.getItem("users"))
+        // {
+        //     users = JSON.parse(sessionStorage.getItem("users"));
+        // }
+
+        // LOCAL STORAGE
+        if(localStorage.getItem("users"))
+        {
+            users = JSON.parse(localStorage.getItem("users"));
+        }
+
+        return users;
+    }
+
+    getNewID()
+    {
+        if(!window.id) window.id = 0;
+
+        id++;
+
+        return id;
+    }
+
+
+    save()
+    {
+        let users = User.getUserStorage();
+
+        // gerando um id
+        if(this.id > 0)
+        {
+            console.log("Id igual a zero!");
+            users.map(u=>
+            {
+                if(u._id === this.id)
+                {
+                    u = this;
+                }
+
+                return u;
+            });
+        }
+        else
+        {
+            console.log("Id maior que zero!");
+            this._id = this.getNewID();
+            users.push(this);
+        }
+        
+        /*
+            Session Storage - Permite gravar dados na sessão
+            Se fechar o navegador, deixa de existir
+        */ 
+        // sessionStorage.setItem("users", JSON.stringify(users));
+        
+        /*
+        Local Storage - Permite gravar dados no navegador
+        Mesmo se fechar o navegador ele continua existindo
+        */ 
+       localStorage.setItem("users", JSON.stringify(users));
+
+        
     }
 }

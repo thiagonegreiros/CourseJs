@@ -53,7 +53,7 @@ class UserController
                         let user = new User();
 
                         user.loadFromJSON(result);
-
+                        user.save();
                         this.getTr(user, tr);
                         this.updateCount();
                         this.formUpdateEl.reset();
@@ -93,7 +93,8 @@ class UserController
                 (content) => {
                     // Se der certo
                     values.photo = content;
-                    this.insert(values);
+                    values.save();
+                    // this.insert(values);
                     this.addLine(values);
 
                     this.formEl.reset();
@@ -235,28 +236,6 @@ class UserController
             this.addLine(user);
         });
     }
-
-
-    insert(data)
-    {
-        let users = this.getUserStorage();
-        
-        users.push(data);
-        
-        /*
-            Session Storage - Permite gravar dados na sessão
-            Se fechar o navegador, deixa de existir
-        */ 
-        // sessionStorage.setItem("users", JSON.stringify(users));
-        
-        /*
-        Local Storage - Permite gravar dados no navegador
-        Mesmo se fechar o navegador ele continua existindo
-        */ 
-       localStorage.setItem("users", JSON.stringify(users));
-        
-    }
-
 
     //Adiciona a linha na tabela
     addLine(dataUser)
