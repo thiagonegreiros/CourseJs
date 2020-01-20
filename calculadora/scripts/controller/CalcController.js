@@ -323,10 +323,6 @@ class CalcController{
             }
 
         }
-
-
-       
-
     }
 
     setError()
