@@ -9,7 +9,10 @@
   "author": "Thiago Negreiros",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.0",
+    "consign": "^0.1.6",
     "express": "^4.17.1",
+    "nedb": "^1.8.0",
     "nodemon": "^2.0.2"
   }
 }

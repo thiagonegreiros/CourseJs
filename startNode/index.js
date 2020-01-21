@@ -1,15 +1,17 @@
 const express = require('express');
-
-//Chamo as rotas do arquivo Routes/index.js
-let routesIndex = require('./Routes/index');
-//Chamo as rotas do arquivo Routes/users.js
-let routesUsers = require('./Routes/users.js');
+const consign = require('consign');
+const bodyParser = require('body-parser');
 
 let app = express();
 
-app.use(routesIndex);
-app.use('/users', routesUsers);
+//Faz um decode do que vier da url
+app.use(bodyParser.urlencoded({extended: false}));
 
+//Converte para JSON os dados
+app.use(bodyParser.json());
+
+//Esse comando ta adicionando todas as rotas dentro do modulo APP
+consign().include('routes').into(app);
 
 //Função de Callback
 app.listen(3333, '10.58.149.207', () =>  
