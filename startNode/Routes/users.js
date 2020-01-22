@@ -7,8 +7,6 @@ let db = new NeDB({
     autoload: true
 });
 
-const { check, validationResult } = require('express-validator');
-
 module.exports = (app) =>
 {
     let route = app.route('/users');
@@ -54,22 +52,9 @@ module.exports = (app) =>
      */
     route.post((req, res) => 
     {
-        [
-            check('email', 'Email is not valid').notEmpty(),
-            check('email', 'Email is not valid').isEmail(),
-        ],function(req, res, next) {
+        //Validação
+        if(!app.utils.validator.user(app, req, res)) return false;
 
-            // Check Errors
-            const errors = validationResult(req);
-            if (errors) {
-              console.log(errors);
-              res.render('register', { errors: errors.array() });
-            }
-            else {
-              console.log('No Errors');
-              res.render('dashboard', { message: 'Successful Registration.' });
-            }
-        }
         //Aqui faz o insert
         db.insert(req.body, (err, user) => 
         {
@@ -114,6 +99,9 @@ module.exports = (app) =>
      */
     routeId.put((req, res) => 
     {
+        //Validação
+        if(!app.utils.validator.user(app, req, res)) return false;
+
         //Update por um elemento 
         db.update({_id:req.params.id}, req.body, err =>  
         {

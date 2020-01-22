@@ -1,7 +1,7 @@
 const express = require('express');
 const consign = require('consign');
 const bodyParser = require('body-parser');
-
+const expressValidator = require('express-validator');
 
 let app = express();
 
@@ -11,7 +11,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 //Converte para JSON os dados
 app.use(bodyParser.json());
 
-// app.use(expressValidator());
+app.use(expressValidator());
 
 //Esse comando ta adicionando todas as rotas dentro do modulo APP
 consign().include('routes').include('utils').into(app);
